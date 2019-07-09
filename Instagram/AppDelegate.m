@@ -20,24 +20,18 @@
     
     ParseClientConfiguration *config = [ParseClientConfiguration   configurationWithBlock:^(id<ParseMutableClientConfiguration> configuration) {
         
-        configuration.applicationId = @"codepathInstagram";
-        configuration.server = @"http://codepathfbinstagram.herokuapp.com/parse";
+        configuration.applicationId = @"yujinkiminstagram";
+        configuration.server = @"https://yujinkiminstagram.herokuapp.com/parse";
     }];
     
     [Parse initializeWithConfiguration:config];
     
-    PFObject *gameScore = [PFObject objectWithClassName:@"GameScore"];
-    gameScore[@"score"] = @1337;
-    gameScore[@"playerName"] = @"Sean Plott";
-    gameScore[@"cheatMode"] = @NO;
-    [gameScore saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (succeeded) {
-            NSLog(@"Object saved!");
-        } else {
-            NSLog(@"Error: %@", error.description);
-        }
-    }];
-    
+    if (PFUser.currentUser) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+
+        self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"navigationViewController"];
+    }
+
     return YES;
 }
 
