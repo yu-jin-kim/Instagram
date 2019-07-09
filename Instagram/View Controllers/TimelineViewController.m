@@ -72,6 +72,7 @@
     //ask datasource for cellsforrowat
     PostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PostCell"];
     Post *post = self.postArray[indexPath.row];
+    cell.post = post;
     [post.image getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         if (!data) {
             return NSLog(@"%@", error);

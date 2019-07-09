@@ -25,7 +25,42 @@
         self.postImageView.image = [UIImage imageWithData:data];
     }];
     self.postCaption.text = self.post.caption;
+    NSDate *createdAt = [self.post createdAt];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    NSString *createdAtString = @"";
+    // Configure the input format to parse the date string
+    
+    //convert string to date
+    // Configure output format
+    formatter.dateStyle = NSDateFormatterShortStyle;
+    formatter.timeStyle = NSDateFormatterNoStyle;
+    
+    [formatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+    [formatter setDateFormat:@"E MMM d HH:mm:ss Z y"];
+    NSDate *todayDate = [NSDate date];
+    //NSLog(@"%@", convertedDate);
+    //NSLog(@"%@", todayDate);
+    double ti = [createdAt timeIntervalSinceDate:todayDate];
+    ti = ti * -1;
+    //NSLog(@"%f",ti);
+    if (ti < 60) {
+        int diff = ti;
+        createdAtString = [NSString stringWithFormat:@"%ds", diff];
+    } else if (ti < 3600) {
+        int diff = round(ti / 60);
+        createdAtString = [NSString stringWithFormat:@"%dm", diff];
+    } else if (ti < 86400) {
+        int diff = round(ti / 60 / 60);
+        createdAtString = [NSString stringWithFormat:@"%dh", diff];
+    } else if (ti < 2629743) {
+        int diff = round(ti / 60 / 60 / 24);
+        createdAtString = [NSString stringWithFormat:@"%dd", diff];
+    } else {
+        createdAtString = [formatter stringFromDate:createdAt];
+    }
+    self.timestampLabel.text = createdAtString;
 }
+
 
 /*
 #pragma mark - Navigation
