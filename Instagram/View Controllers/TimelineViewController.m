@@ -9,6 +9,7 @@
 #import "TimelineViewController.h"
 #import "SignUpViewController.h"
 #import "LoginViewController.h"
+#import "DetailsViewController.h"
 #import <Parse/Parse.h>
 #import "Post.h"
 #import "PostCell.h"
@@ -16,6 +17,7 @@
 @interface TimelineViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *postArray;
+@property (strong, nonatomic) UIRefreshControl *refreshControl;
 
 @end
 
@@ -27,7 +29,9 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = 480.0;
-
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(fetchPosts) forControlEvents:UIControlEventValueChanged];
+    [self.tableView insertSubview:self.refreshControl atIndex:0];
     [self fetchPosts];
 
 }
@@ -47,6 +51,7 @@
         } else {
             NSLog(@"%@", error.localizedDescription);
         }
+        [self.refreshControl endRefreshing];
     }];
 }
 
@@ -84,14 +89,13 @@
     //returns number of items returned from API
     return self.postArray.count;
 }
-/*
-#pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    PostCell *tappedCell = sender;
+    DetailsViewController *detailsViewController = [segue destinationViewController];
+    detailsViewController.post = tappedCell.post;
 }
-*/
+
 
 @end

@@ -20,6 +20,7 @@
 		1C9214A622D52508006EC594 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9214A522D52508006EC594 /* CameraViewController.m */; };
 		1C9214A922D53B97006EC594 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9214A822D53B97006EC594 /* Post.m */; };
 		1C9214AC22D54603006EC594 /* PostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9214AB22D54603006EC594 /* PostCell.m */; };
+		1C9214AF22D54D97006EC594 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9214AE22D54D97006EC594 /* DetailsViewController.m */; };
 		25FCF9C6AC2D8B4DBE89FE03 /* Pods_InstagramUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A799D411BD1EC099120E341 /* Pods_InstagramUITests.framework */; };
 		CC682C658F578DC121A5456D /* Pods_Instagram.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 225817611252D9D8005CD6EA /* Pods_Instagram.framework */; };
 		F6CA717D3603C43B72525C05 /* Pods_InstagramTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29259E13FD60EB3B79552962 /* Pods_InstagramTests.framework */; };
@@ -70,6 +71,8 @@
 		1C9214A822D53B97006EC594 /* Post.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
 		1C9214AA22D54603006EC594 /* PostCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PostCell.h; sourceTree = "<group>"; };
 		1C9214AB22D54603006EC594 /* PostCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PostCell.m; sourceTree = "<group>"; };
+		1C9214AD22D54D97006EC594 /* DetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
+		1C9214AE22D54D97006EC594 /* DetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
 		225817611252D9D8005CD6EA /* Pods_Instagram.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Instagram.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		29259E13FD60EB3B79552962 /* Pods_InstagramTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstagramTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		66C25F970E5F1492CD631839 /* Pods-Instagram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Instagram.release.xcconfig"; path = "Target Support Files/Pods-Instagram/Pods-Instagram.release.xcconfig"; sourceTree = "<group>"; };
@@ -133,8 +136,7 @@
 		1C92146322D3FA77006EC594 /* Instagram */ = {
 			isa = PBXGroup;
 			children = (
-				1C9214AA22D54603006EC594 /* PostCell.h */,
-				1C9214AB22D54603006EC594 /* PostCell.m */,
+				1C9214B022D54DA6006EC594 /* TableViewCell */,
 				1C9214A022D4127C006EC594 /* Models */,
 				1C92149922D407B7006EC594 /* View Controllers */,
 				1C92146422D3FA77006EC594 /* AppDelegate.h */,
@@ -169,6 +171,8 @@
 		1C92149922D407B7006EC594 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				1C9214AD22D54D97006EC594 /* DetailsViewController.h */,
+				1C9214AE22D54D97006EC594 /* DetailsViewController.m */,
 				1C9214A422D52508006EC594 /* CameraViewController.h */,
 				1C9214A522D52508006EC594 /* CameraViewController.m */,
 				1C9214A122D415B0006EC594 /* TimelineViewController.h */,
@@ -188,6 +192,15 @@
 				1C9214A822D53B97006EC594 /* Post.m */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		1C9214B022D54DA6006EC594 /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				1C9214AA22D54603006EC594 /* PostCell.h */,
+				1C9214AB22D54603006EC594 /* PostCell.m */,
+			);
+			path = TableViewCell;
 			sourceTree = "<group>";
 		};
 		355E608CC07BA85B42FE74C0 /* Pods */ = {
@@ -439,6 +452,7 @@
 				1C9214AC22D54603006EC594 /* PostCell.m in Sources */,
 				1C9214A622D52508006EC594 /* CameraViewController.m in Sources */,
 				1C92146622D3FA77006EC594 /* AppDelegate.m in Sources */,
+				1C9214AF22D54D97006EC594 /* DetailsViewController.m in Sources */,
 				1C9214A322D415B0006EC594 /* TimelineViewController.m in Sources */,
 				1C9214A922D53B97006EC594 /* Post.m in Sources */,
 			);

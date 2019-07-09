@@ -1,5 +1,5 @@
 //
-//  PostCell.h
+//  DetailsViewController.h
 //  Instagram
 //
 //  Created by yujinkim on 7/9/19.
@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Post.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface PostCell : UITableViewCell
+@interface DetailsViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIImageView *postImageView;
+@property (weak, nonatomic) IBOutlet UILabel *timestampLabel;
 @property (weak, nonatomic) IBOutlet UILabel *postCaption;
+@property (strong, nonatomic) Post *post;
 
 @end
 
