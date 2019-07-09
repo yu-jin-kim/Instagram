@@ -17,6 +17,9 @@
 		1C92149822D407AB006EC594 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C92149722D407AB006EC594 /* LoginViewController.m */; };
 		1C92149C22D41202006EC594 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C92149B22D41202006EC594 /* SignUpViewController.m */; };
 		1C9214A322D415B0006EC594 /* TimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9214A222D415B0006EC594 /* TimelineViewController.m */; };
+		1C9214A622D52508006EC594 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9214A522D52508006EC594 /* CameraViewController.m */; };
+		1C9214A922D53B97006EC594 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9214A822D53B97006EC594 /* Post.m */; };
+		1C9214AC22D54603006EC594 /* PostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9214AB22D54603006EC594 /* PostCell.m */; };
 		25FCF9C6AC2D8B4DBE89FE03 /* Pods_InstagramUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A799D411BD1EC099120E341 /* Pods_InstagramUITests.framework */; };
 		CC682C658F578DC121A5456D /* Pods_Instagram.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 225817611252D9D8005CD6EA /* Pods_Instagram.framework */; };
 		F6CA717D3603C43B72525C05 /* Pods_InstagramTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29259E13FD60EB3B79552962 /* Pods_InstagramTests.framework */; };
@@ -61,6 +64,12 @@
 		1C92149B22D41202006EC594 /* SignUpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
 		1C9214A122D415B0006EC594 /* TimelineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimelineViewController.h; sourceTree = "<group>"; };
 		1C9214A222D415B0006EC594 /* TimelineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TimelineViewController.m; sourceTree = "<group>"; };
+		1C9214A422D52508006EC594 /* CameraViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
+		1C9214A522D52508006EC594 /* CameraViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
+		1C9214A722D53B97006EC594 /* Post.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
+		1C9214A822D53B97006EC594 /* Post.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
+		1C9214AA22D54603006EC594 /* PostCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PostCell.h; sourceTree = "<group>"; };
+		1C9214AB22D54603006EC594 /* PostCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PostCell.m; sourceTree = "<group>"; };
 		225817611252D9D8005CD6EA /* Pods_Instagram.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Instagram.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		29259E13FD60EB3B79552962 /* Pods_InstagramTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstagramTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		66C25F970E5F1492CD631839 /* Pods-Instagram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Instagram.release.xcconfig"; path = "Target Support Files/Pods-Instagram/Pods-Instagram.release.xcconfig"; sourceTree = "<group>"; };
@@ -124,6 +133,8 @@
 		1C92146322D3FA77006EC594 /* Instagram */ = {
 			isa = PBXGroup;
 			children = (
+				1C9214AA22D54603006EC594 /* PostCell.h */,
+				1C9214AB22D54603006EC594 /* PostCell.m */,
 				1C9214A022D4127C006EC594 /* Models */,
 				1C92149922D407B7006EC594 /* View Controllers */,
 				1C92146422D3FA77006EC594 /* AppDelegate.h */,
@@ -158,6 +169,8 @@
 		1C92149922D407B7006EC594 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				1C9214A422D52508006EC594 /* CameraViewController.h */,
+				1C9214A522D52508006EC594 /* CameraViewController.m */,
 				1C9214A122D415B0006EC594 /* TimelineViewController.h */,
 				1C9214A222D415B0006EC594 /* TimelineViewController.m */,
 				1C92149A22D41202006EC594 /* SignUpViewController.h */,
@@ -171,6 +184,8 @@
 		1C9214A022D4127C006EC594 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				1C9214A722D53B97006EC594 /* Post.h */,
+				1C9214A822D53B97006EC594 /* Post.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -421,8 +436,11 @@
 				1C92149822D407AB006EC594 /* LoginViewController.m in Sources */,
 				1C92149C22D41202006EC594 /* SignUpViewController.m in Sources */,
 				1C92147422D3FA78006EC594 /* main.m in Sources */,
+				1C9214AC22D54603006EC594 /* PostCell.m in Sources */,
+				1C9214A622D52508006EC594 /* CameraViewController.m in Sources */,
 				1C92146622D3FA77006EC594 /* AppDelegate.m in Sources */,
 				1C9214A322D415B0006EC594 /* TimelineViewController.m in Sources */,
+				1C9214A922D53B97006EC594 /* Post.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

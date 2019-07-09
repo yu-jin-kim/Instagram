@@ -20,7 +20,7 @@
     
     ParseClientConfiguration *config = [ParseClientConfiguration   configurationWithBlock:^(id<ParseMutableClientConfiguration> configuration) {
         
-        configuration.applicationId = @"yujinkiminstagram";
+        configuration.applicationId = @"myAppID";
         configuration.server = @"https://yujinkiminstagram.herokuapp.com/parse";
     }];
     
