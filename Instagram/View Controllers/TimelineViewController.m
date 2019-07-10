@@ -80,14 +80,13 @@ InfiniteScrollActivityView* loadingMoreView;
     long finalID = lastObjLong -1;
     NSNumber *finalIDNum = @(finalID);
     
-    
 }
 
 - (void)fetchPosts{
     // construct query
     PFQuery *postQuery = [Post query];
     [postQuery orderByDescending:@"createdAt"];
-    [postQuery includeKey:@"user"];
+    [postQuery includeKey:@"author"];
     postQuery.limit = 20;
     
     // fetch data asynchronously
@@ -178,7 +177,7 @@ InfiniteScrollActivityView* loadingMoreView;
     NSString *likeCountString = [post.likeCount stringValue];
     cell.likeCountLabel.text = likeCountString;
     cell.username.text = cell.post.author.username;
-    cell.delegate = self;
+    
     return cell;
 }
 
@@ -194,14 +193,10 @@ InfiniteScrollActivityView* loadingMoreView;
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([[segue identifier] isEqualToString:@"profileSegue"]){
-        ProfileViewController *profileViewController = [segue destinationViewController];
-        profileViewController.user = sender;
-    } else {
-        PostCell *tappedCell = sender;
-        DetailsViewController *detailsViewController = [segue destinationViewController];
-        detailsViewController.post = tappedCell.post;
-    }
+    PostCell *tappedCell = sender;
+    DetailsViewController *detailsViewController = [segue destinationViewController];
+    detailsViewController.post = tappedCell.post;
+    
 }
 
 

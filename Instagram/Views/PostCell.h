@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "Post.h"
 
-@protocol PostCellDelegate;
-
 @interface PostCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *profilePictureView;
 @property (weak, nonatomic) IBOutlet UIImageView *postImageView;
@@ -19,13 +17,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *likeCountLabel;
 @property (weak, nonatomic) IBOutlet UIButton *likeButton;
 @property (weak, nonatomic) IBOutlet UILabel *username;
-@property (nonatomic, weak) id<PostCellDelegate> delegate;
 @property (strong, nonatomic) Post *post;
 
-- (void) didTapUserProfile:(UITapGestureRecognizer *)sender;
-
 @end
 
-@protocol PostCellDelegate
-- (void)postCell:(PostCell *) postCell didTap: (PFUser *)user;
-@end
+

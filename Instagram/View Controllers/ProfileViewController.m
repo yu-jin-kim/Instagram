@@ -24,7 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    if (self.user == nil){
+    if(self.user == nil){
         self.user = [PFUser currentUser];
     }
     self.profileImageView.layer.cornerRadius = 50.0f;
@@ -48,8 +48,8 @@
         self.profileImageView.image = self.profileImage;
     }];
     self.username.text = self.user.username;
-    
 }
+
 - (IBAction)profileImagePressed:(id)sender {
     if (self.user == [PFUser currentUser]){
         [self presentViewController:self.imagePickerVC animated:YES completion:nil];
@@ -62,7 +62,7 @@
     UIImage *editedImage = info[UIImagePickerControllerEditedImage];
     PFUser *user = [PFUser currentUser];
     // Do something with the images (based on your use case)
-
+    
     self.profileImage = [self resizeImage:editedImage withSize:CGSizeMake(400, 400)];
     self.profileImageView.image = self.profileImage;
     NSData *imageData = UIImageJPEGRepresentation(self.profileImage, 1.0);
@@ -72,6 +72,8 @@
     [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
         }}];
+    
+    
     // Dismiss UIImagePickerController to go back to your original view controller
     [self dismissViewControllerAnimated:YES completion:nil];
 }

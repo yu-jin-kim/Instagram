@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Post.h"
-#import "PostCell.h"
 
-@interface TimelineViewController : UIViewController<PostCellDelegate>
+NS_ASSUME_NONNULL_BEGIN
 
-- (void)didPost:(Post *)post;
+@interface TimelineViewController : UIViewController
 
 @end
+
+NS_ASSUME_NONNULL_END
