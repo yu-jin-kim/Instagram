@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
-
+#import "PostCollectionViewCell.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ProfileViewController : UIViewController
+@interface ProfileViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UILabel *username;
 @property (weak, nonatomic) IBOutlet UILabel *bioLabel;

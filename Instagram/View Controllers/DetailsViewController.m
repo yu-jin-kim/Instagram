@@ -17,6 +17,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.profilePicture.layer.cornerRadius = 17.5f;
+    PFFileObject *image = [self.post.author objectForKey:@"profileImage"];
+    [image getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        if (!data) {
+            return NSLog(@"%@", error);
+        }
+        // Do something with the image
+        self.profilePicture.image = [UIImage imageWithData:data];
+    }];
+    NSString *likeCountString = [self.post.likeCount stringValue];
+    self.likeCount.text = likeCountString;
+    self.username.text = self.post.author.username;
     [self.post.image getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         if (!data) {
             return NSLog(@"%@", error);
@@ -59,6 +71,10 @@
         createdAtString = [formatter stringFromDate:createdAt];
     }
     self.timestampLabel.text = createdAtString;
+}
+- (IBAction)likeButtonPressed:(id)sender {
+}
+- (IBAction)commentButtonPressed:(id)sender {
 }
 
 
