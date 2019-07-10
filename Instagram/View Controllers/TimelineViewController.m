@@ -177,7 +177,7 @@ InfiniteScrollActivityView* loadingMoreView;
     NSString *likeCountString = [post.likeCount stringValue];
     cell.likeCountLabel.text = likeCountString;
     cell.username.text = cell.post.author.username;
-    
+    cell.delegate = self;
     return cell;
 }
 
@@ -193,10 +193,14 @@ InfiniteScrollActivityView* loadingMoreView;
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    PostCell *tappedCell = sender;
-    DetailsViewController *detailsViewController = [segue destinationViewController];
-    detailsViewController.post = tappedCell.post;
-    
+    if ([[segue identifier] isEqualToString:@"profileSegue"]){
+        ProfileViewController *profileViewController = [segue destinationViewController];
+        profileViewController.user = sender;
+    } else{
+        PostCell *tappedCell = sender;
+        DetailsViewController *detailsViewController = [segue destinationViewController];
+        detailsViewController.post = tappedCell.post;
+    }
 }
 
 

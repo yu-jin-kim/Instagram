@@ -13,6 +13,15 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    UITapGestureRecognizer *profileTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapUserProfile:)];
+    [self.profilePictureView addGestureRecognizer:profileTapGestureRecognizer];
+    [self.profilePictureView setUserInteractionEnabled:YES];
+}
+
+- (void) didTapUserProfile:(UITapGestureRecognizer *)sender{
+    // TODO: Call method on delegate
+    [self.delegate postCell:self didTap:self.post.author];
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -28,6 +37,10 @@
 }
 
 - (IBAction)commentButtonPressed:(id)sender {
+}
+
+- (void)postCell:(PostCell *) postCell didTap: (PFUser *)user{
+    [self.delegate postCell:self didTap:self.post.author];
 }
 
 @end
