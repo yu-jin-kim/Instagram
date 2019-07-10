@@ -1,31 +1,29 @@
 //
-//  CameraViewController.m
+//  ProfileViewController.m
 //  Instagram
 //
-//  Created by yujinkim on 7/9/19.
+//  Created by yujinkim on 7/10/19.
 //  Copyright © 2019 yujinkim. All rights reserved.
 //
 
-#import "CameraViewController.h"
+#import "ProfileViewController.h"
 #import "Post.h"
-#import "TimelineViewController.h"
+#import <Parse/Parse.h>
 
-@interface CameraViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate>
+@interface ProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) UIImagePickerController *imagePickerVC;
-@property (strong, nonatomic) UIImage *photo;
+@property (strong, nonatomic) UIImage *profileImage;
 
 @end
 
-@implementation CameraViewController
+@implementation ProfileViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.captionView.delegate = self;
-    self.captionView.layer.borderWidth = 1.0f;
-    self.captionView.layer.borderColor = [[UIColor grayColor] CGColor];
-    self.captionView.clipsToBounds = YES;
-    self.captionView.layer.cornerRadius = 10.0f;
+    
+    self.profileImageView.layer.cornerRadius = 50.0f;
     self.imagePickerVC = [UIImagePickerController new];
     self.imagePickerVC.delegate = self;
     self.imagePickerVC.allowsEditing = YES;
@@ -36,19 +34,43 @@
         NSLog(@"Camera 🚫 available so we will use photo library instead");
         self.imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     }
+    PFUser *user = [PFUser currentUser];
+    PFFileObject *image = [user objectForKey:@"profileImage"];
+    [image getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        if (!data) {
+            return NSLog(@"%@", error);
+        }
+        // Do something with the image
+        self.profileImage = [UIImage imageWithData:data];
+        self.profileImageView.image = self.profileImage;
+    }];
+}
+- (IBAction)profileImagePressed:(id)sender {
+    [self presentViewController:self.imagePickerVC animated:YES completion:nil];
 }
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     
     // Get the image captured by the UIImagePickerController
     //UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
     UIImage *editedImage = info[UIImagePickerControllerEditedImage];
-    
+    PFUser *user = [PFUser currentUser];
     // Do something with the images (based on your use case)
-    self.photo = [self resizeImage:editedImage withSize:CGSizeMake(400, 400)];
-    self.photoView.image = self.photo;
+
+    self.profileImage = [self resizeImage:editedImage withSize:CGSizeMake(400, 400)];
+    self.profileImageView.image = self.profileImage;
+    NSData *imageData = UIImageJPEGRepresentation(self.profileImage, 1.0);
+    PFFileObject *imageFile = [PFFileObject fileObjectWithName:@"img.png" data:imageData];
+    [imageFile saveInBackground];
+    [user setObject:imageFile forKey:@"profileImage"];
+    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (!error) {
+        }}];
+    
+    
     // Dismiss UIImagePickerController to go back to your original view controller
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
 - (UIImage *)resizeImage:(UIImage *)image withSize:(CGSize)size {
     UIImageView *resizeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
     
@@ -62,32 +84,6 @@
     
     return newImage;
 }
-- (IBAction)photoButtonPressed:(id)sender {
-    [self presentViewController:self.imagePickerVC animated:YES completion:nil];
-}
-- (IBAction)postButtonPressed:(id)sender {
-    if(self.photo){
-        [Post postUserImage:self.photo withCaption:self.captionView.text withCompletion:nil];
-        
-        [self.tabBarController setSelectedIndex:0];
-    }
-    else{
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
-                                                                       message:@"Please select a photo."
-                                                                preferredStyle:(UIAlertControllerStyleAlert)];
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
-                                                           style:UIAlertActionStyleDefault
-                                                         handler:^(UIAlertAction * _Nonnull action) {
-                                                             // handle response here.
-                                                         }];
-        // add the OK action to the alert controller
-        [alert addAction:okAction];
-        [self presentViewController:alert animated:YES completion:^{
-        }];
-    }
-    
-}
-
 
 /*
 #pragma mark - Navigation

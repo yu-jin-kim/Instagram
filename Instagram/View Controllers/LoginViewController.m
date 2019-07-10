@@ -19,10 +19,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.loginButton.layer.cornerRadius = 5.0f;
+    self.passwordField.secureTextEntry = YES;
 }
+
 - (IBAction)signupPressed:(id)sender {
     [self performSegueWithIdentifier:@"signupSegue" sender:nil];
 }
+
 - (IBAction)loginPressed:(id)sender {
     NSString *username = self.usernameField.text;
     NSString *password = self.passwordField.text;
