@@ -9,6 +9,7 @@
 #import "SignUpViewController.h"
 
 @interface SignUpViewController ()
+@property (weak, nonatomic) IBOutlet UIButton *signupButton;
 
 @end
 
@@ -17,10 +18,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.signupButton.layer.cornerRadius = 5.0f;
 }
 
 - (IBAction)signupPressed:(id)sender {
     [self registerUser];
+}
+- (IBAction)loginPressed:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)registerUser {
@@ -36,6 +41,18 @@
     [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * error) {
         if (error != nil) {
             NSLog(@"Error: %@", error.localizedDescription);
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                           message:@"Could not register account."
+                                                                    preferredStyle:(UIAlertControllerStyleAlert)];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:^(UIAlertAction * _Nonnull action) {
+                                                                 // handle response here.
+                                                             }];
+            // add the OK action to the alert controller
+            [alert addAction:okAction];
+            [self presentViewController:alert animated:YES completion:^{
+            }];
         } else {
             NSLog(@"User registered successfully");
             [self dismissViewControllerAnimated:YES completion:nil];

@@ -13,6 +13,7 @@
 #import <Parse/Parse.h>
 #import "Post.h"
 #import "PostCell.h"
+#import "AppDelegate.h"
 
 @interface TimelineViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -45,7 +46,6 @@
     // fetch data asynchronously
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
         if (posts) {
-            // do something with the array of object returned by the call
             self.postArray = posts;
             [self.tableView reloadData];
         } else {
@@ -55,19 +55,19 @@
     }];
 }
 
-- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
-    if ([item.title isEqualToString:@"Post"]) { // or whatever your title is
-        [self performSegueWithIdentifier:@"postSegue" sender:self];
-    }
-}
 
 - (IBAction)logoutPressed:(id)sender {
     [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
         // PFUser.current() will now be nil
     }];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];
     
+    LoginViewController* loginController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"LoginViewController"];
+    
+    UINavigationController* navigation = [[UINavigationController alloc] initWithRootViewController:loginController];
+    appDelegateTemp.window.rootViewController = navigation;
 }
+
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     //ask datasource for cellsforrowat
     PostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PostCell"];

@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 
 @interface LoginViewController ()
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
 
 @end
 
@@ -17,6 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.loginButton.layer.cornerRadius = 5.0f;
 }
 - (IBAction)signupPressed:(id)sender {
     [self performSegueWithIdentifier:@"signupSegue" sender:nil];

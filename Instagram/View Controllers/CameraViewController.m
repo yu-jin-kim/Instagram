@@ -64,8 +64,25 @@
     [self presentViewController:self.imagePickerVC animated:YES completion:nil];
 }
 - (IBAction)postButtonPressed:(id)sender {
-    [Post postUserImage:self.photo withCaption:self.captionView.text withCompletion:nil];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if(self.photo){
+        [Post postUserImage:self.photo withCaption:self.captionView.text withCompletion:nil];
+        [self.tabBarController setSelectedIndex:0];
+    }
+    else{
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                       message:@"Please select a photo."
+                                                                preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             // handle response here.
+                                                         }];
+        // add the OK action to the alert controller
+        [alert addAction:okAction];
+        [self presentViewController:alert animated:YES completion:^{
+        }];
+    }
+    
 }
 /*
 #pragma mark - Navigation
