@@ -7,6 +7,8 @@
 //
 
 #import "ProfileViewController.h"
+#import "TimelineViewController.h"
+#import "PostCell.h"
 #import "Post.h"
 #import <Parse/Parse.h>
 
@@ -22,7 +24,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    if (self.user == nil){
+        self.user = [PFUser currentUser];
+    }
     self.profileImageView.layer.cornerRadius = 50.0f;
     self.imagePickerVC = [UIImagePickerController new];
     self.imagePickerVC.delegate = self;
@@ -34,8 +38,7 @@
         NSLog(@"Camera 🚫 available so we will use photo library instead");
         self.imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     }
-    PFUser *user = [PFUser currentUser];
-    PFFileObject *image = [user objectForKey:@"profileImage"];
+    PFFileObject *image = [self.user objectForKey:@"profileImage"];
     [image getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         if (!data) {
             return NSLog(@"%@", error);
@@ -44,9 +47,13 @@
         self.profileImage = [UIImage imageWithData:data];
         self.profileImageView.image = self.profileImage;
     }];
+    self.username.text = self.user.username;
+    
 }
 - (IBAction)profileImagePressed:(id)sender {
-    [self presentViewController:self.imagePickerVC animated:YES completion:nil];
+    if (self.user == [PFUser currentUser]){
+        [self presentViewController:self.imagePickerVC animated:YES completion:nil];
+    }
 }
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     
@@ -65,8 +72,6 @@
     [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
         }}];
-    
-    
     // Dismiss UIImagePickerController to go back to your original view controller
     [self dismissViewControllerAnimated:YES completion:nil];
 }

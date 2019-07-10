@@ -68,7 +68,8 @@
 - (IBAction)postButtonPressed:(id)sender {
     if(self.photo){
         [Post postUserImage:self.photo withCaption:self.captionView.text withCompletion:nil];
-        
+        self.photoView.image = nil;
+        [self.captionView setText:@""];
         [self.tabBarController setSelectedIndex:0];
     }
     else{

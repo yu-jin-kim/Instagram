@@ -13,10 +13,18 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    UITapGestureRecognizer *profileTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapUserProfile:)];
+    [self.profilePictureView addGestureRecognizer:profileTapGestureRecognizer];
+    [self.profilePictureView setUserInteractionEnabled:YES];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
+}
+- (void) didTapUserProfile:(UITapGestureRecognizer *)sender{
+    // TODO: Call method on delegate
+    [self.delegate postCell:self didTap:self.post.author];
+    
 }
 
 - (IBAction)likeButtonPressed:(id)sender {

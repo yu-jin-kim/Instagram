@@ -10,6 +10,7 @@
 #import "SignUpViewController.h"
 #import "LoginViewController.h"
 #import "DetailsViewController.h"
+#import "ProfileViewController.h"
 #import <Parse/Parse.h>
 #import "Post.h"
 #import "PostCell.h"
@@ -86,7 +87,7 @@ InfiniteScrollActivityView* loadingMoreView;
     // construct query
     PFQuery *postQuery = [Post query];
     [postQuery orderByDescending:@"createdAt"];
-    [postQuery includeKey:@"author"];
+    [postQuery includeKey:@"user"];
     postQuery.limit = 20;
     
     // fetch data asynchronously
@@ -177,7 +178,7 @@ InfiniteScrollActivityView* loadingMoreView;
     NSString *likeCountString = [post.likeCount stringValue];
     cell.likeCountLabel.text = likeCountString;
     cell.username.text = cell.post.author.username;
-    
+    cell.delegate = self;
     return cell;
 }
 
@@ -187,11 +188,20 @@ InfiniteScrollActivityView* loadingMoreView;
     return self.postArray.count;
 }
 
+- (void)postCell:(PostCell *)postCell didTap:(PFUser *)user{
+    [self performSegueWithIdentifier:@"profileSegue" sender:user];
+}
+
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    PostCell *tappedCell = sender;
-    DetailsViewController *detailsViewController = [segue destinationViewController];
-    detailsViewController.post = tappedCell.post;
+    if ([[segue identifier] isEqualToString:@"profileSegue"]){
+        ProfileViewController *profileViewController = [segue destinationViewController];
+        profileViewController.user = sender;
+    } else {
+        PostCell *tappedCell = sender;
+        DetailsViewController *detailsViewController = [segue destinationViewController];
+        detailsViewController.post = tappedCell.post;
+    }
 }
 
 
