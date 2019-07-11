@@ -14,9 +14,11 @@
 
 @interface ProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (strong, nonatomic) NSArray *postArray;
+@property (strong, nonatomic) NSMutableArray *postArray;
 @property (strong, nonatomic) UIImagePickerController *imagePickerVC;
 @property (strong, nonatomic) UIImage *profileImage;
+@property (strong, nonatomic) UIRefreshControl *refreshControl;
+@property (nonatomic) bool isMoreDataLoading;
 
 @end
 
@@ -34,6 +36,7 @@
     }];
     NSString *userBio = [self.user objectForKey:@"userBio"];
     self.bioLabel.text = userBio;
+    [self fetchPosts];
 }
 
 - (void)viewDidLoad {
@@ -64,14 +67,6 @@
     self.username.text = self.user.username;
     NSString *userBio = [self.user objectForKey:@"userBio"];
     self.bioLabel.text = userBio;
-    
-    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
-    layout.minimumLineSpacing = 2;
-    layout.minimumInteritemSpacing = 2;
-    CGFloat postersPerLine = 3;
-    CGFloat itemWidth = (self.collectionView.frame.size.width - layout.minimumInteritemSpacing * (postersPerLine - 1)) / postersPerLine;
-    CGFloat itemHeight = itemWidth;
-    layout.itemSize = CGSizeMake(itemWidth, itemHeight);
 }
 
 
@@ -82,7 +77,7 @@
     [postQuery includeKey:@"author"];
     [postQuery whereKey:@"author" equalTo:self.user];
     postQuery.limit = 20;
-    
+
     // fetch data asynchronously
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
         if (posts) {
@@ -93,7 +88,6 @@
         }
     }];
 }
-
 
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     PostCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PostCollectionViewCell" forIndexPath:indexPath];

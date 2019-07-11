@@ -20,7 +20,7 @@
 
 @interface TimelineViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) NSArray *postArray;
+@property (strong, nonatomic) NSMutableArray *postArray;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 @property (nonatomic) bool isMoreDataLoading;
 
@@ -30,6 +30,8 @@
 
 bool isMoreDataLoading = false;
 InfiniteScrollActivityView* loadingMoreView;
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -60,46 +62,45 @@ InfiniteScrollActivityView* loadingMoreView;
         // When the user has scrolled past the threshold, start requesting
         if(scrollView.contentOffset.y > scrollOffsetThreshold && self.tableView.isDragging) {
             isMoreDataLoading = true;
-            
+            Post *lastPost = [self.postArray lastObject];
+            NSDate *lastDate = lastPost.createdAt;
             // Update position of loadingMoreView, and start loading indicator
             CGRect frame = CGRectMake(0, self.tableView.contentSize.height, self.tableView.bounds.size.width, InfiniteScrollActivityView.defaultHeight);
             loadingMoreView.frame = frame;
             [loadingMoreView startAnimating];
-            
             // Code to load more results
-            [self loadMoreData];
+            [self fetchPostsWithFilter:lastDate];
         }
     }
 }
 
--(void)loadMoreData{
-    Post *lastPost = [self.postArray lastObject];
-    NSString *lastObjStrID = lastPost.postID;
-    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
-    NSNumber *lastObjID = [f numberFromString:lastObjStrID];
-    long lastObjLong = [lastObjID longValue];
-    long finalID = lastObjLong -1;
-    NSNumber *finalIDNum = @(finalID);
-    
+- (void) fetchPosts{
+    [self fetchPostsWithFilter:nil];
 }
 
-- (void)fetchPosts{
-    // construct query
+- (void) fetchPostsWithFilter: (NSDate *) lastDate {
     PFQuery *postQuery = [Post query];
     [postQuery orderByDescending:@"createdAt"];
     [postQuery includeKey:@"author"];
+    if (lastDate) {
+        [postQuery whereKey:@"createdAt" lessThan:lastDate];
+    }
     postQuery.limit = 20;
-    [[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES]  setLabelText:@"Loading"];
-    // fetch data asynchronously
-    [postQuery findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
-        if (posts) {
-            self.postArray = posts;
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [postQuery findObjectsInBackgroundWithBlock:^(NSArray<Post *> * _Nullable posts, NSError * _Nullable error) {
+        if ([posts count] != 0) {
+            if (lastDate) {
+                self.isMoreDataLoading = false;
+                [self.postArray addObjectsFromArray:posts];
+            } else {
+                self.postArray = posts;
+            }
             [self.tableView reloadData];
         } else {
             NSLog(@"%@", error.localizedDescription);
         }
         [self.refreshControl endRefreshing];
-        [MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
 }
 
@@ -179,6 +180,7 @@ InfiniteScrollActivityView* loadingMoreView;
     NSString *likeCountString = [post.likeCount stringValue];
     cell.likeCountLabel.text = likeCountString;
     cell.username.text = cell.post.author.username;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.delegate = self;
     return cell;
 }
