@@ -181,6 +181,16 @@ InfiniteScrollActivityView* loadingMoreView;
     cell.likeCountLabel.text = likeCountString;
     cell.username.text = cell.post.author.username;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell.likeButton setImage:[UIImage imageNamed:@"hearticon2.png"] forState:UIControlStateNormal];
+    [cell.likeButton setImage:[UIImage imageNamed:@"redhearticon.png"] forState:UIControlStateSelected];
+    PFUser *currentUser = [PFUser currentUser];
+    NSArray *likedUsers = [[NSArray alloc] init];
+    likedUsers = [cell.post objectForKey:@"likes"];
+    if(![likedUsers containsObject:currentUser.username]){
+        cell.likeButton.selected = NO;
+    }else{
+        cell.likeButton.selected = YES;
+    }
     cell.delegate = self;
     return cell;
 }
