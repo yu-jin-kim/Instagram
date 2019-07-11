@@ -17,6 +17,7 @@
 #import "AppDelegate.h"
 #import "InfiniteScrollActivityView.h"
 
+
 @interface TimelineViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *postArray;
@@ -88,7 +89,7 @@ InfiniteScrollActivityView* loadingMoreView;
     [postQuery orderByDescending:@"createdAt"];
     [postQuery includeKey:@"author"];
     postQuery.limit = 20;
-    
+    [[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES]  setLabelText:@"Loading"];
     // fetch data asynchronously
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
         if (posts) {
@@ -98,6 +99,7 @@ InfiniteScrollActivityView* loadingMoreView;
             NSLog(@"%@", error.localizedDescription);
         }
         [self.refreshControl endRefreshing];
+        [MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
     }];
 }
 

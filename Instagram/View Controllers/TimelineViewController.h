@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "PostCell.h"
 #import "Post.h"
-
+#import "MBProgressHUD.h"
 @interface TimelineViewController : UIViewController<PostCellDelegate>
 
-- (void)didPost:(Post *)post;
+
 
 @end
