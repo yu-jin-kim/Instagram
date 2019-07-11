@@ -25,6 +25,7 @@
 		1C9214F822D65DA4006EC594 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9214F722D65DA4006EC594 /* ProfileViewController.m */; };
 		1C9214FB22D677D9006EC594 /* InfiniteScrollActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9214FA22D677D9006EC594 /* InfiniteScrollActivityView.m */; };
 		1C9214FE22D6A2E3006EC594 /* PostCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9214FD22D6A2E3006EC594 /* PostCollectionViewCell.m */; };
+		1C92150422D6B4C8006EC594 /* EditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C92150322D6B4C8006EC594 /* EditViewController.m */; };
 		25FCF9C6AC2D8B4DBE89FE03 /* Pods_InstagramUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A799D411BD1EC099120E341 /* Pods_InstagramUITests.framework */; };
 		CC682C658F578DC121A5456D /* Pods_Instagram.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 225817611252D9D8005CD6EA /* Pods_Instagram.framework */; };
 		F6CA717D3603C43B72525C05 /* Pods_InstagramTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29259E13FD60EB3B79552962 /* Pods_InstagramTests.framework */; };
@@ -84,6 +85,8 @@
 		1C9214FA22D677D9006EC594 /* InfiniteScrollActivityView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InfiniteScrollActivityView.m; sourceTree = "<group>"; };
 		1C9214FC22D6A2E3006EC594 /* PostCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PostCollectionViewCell.h; sourceTree = "<group>"; };
 		1C9214FD22D6A2E3006EC594 /* PostCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PostCollectionViewCell.m; sourceTree = "<group>"; };
+		1C92150222D6B4C8006EC594 /* EditViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditViewController.h; sourceTree = "<group>"; };
+		1C92150322D6B4C8006EC594 /* EditViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditViewController.m; sourceTree = "<group>"; };
 		225817611252D9D8005CD6EA /* Pods_Instagram.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Instagram.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		29259E13FD60EB3B79552962 /* Pods_InstagramTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstagramTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		66C25F970E5F1492CD631839 /* Pods-Instagram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Instagram.release.xcconfig"; path = "Target Support Files/Pods-Instagram/Pods-Instagram.release.xcconfig"; sourceTree = "<group>"; };
@@ -183,6 +186,8 @@
 		1C92149922D407B7006EC594 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				1C92150222D6B4C8006EC594 /* EditViewController.h */,
+				1C92150322D6B4C8006EC594 /* EditViewController.m */,
 				1C9214F622D65DA4006EC594 /* ProfileViewController.h */,
 				1C9214F722D65DA4006EC594 /* ProfileViewController.m */,
 				1C9214AD22D54D97006EC594 /* DetailsViewController.h */,
@@ -482,6 +487,7 @@
 				1C92146622D3FA77006EC594 /* AppDelegate.m in Sources */,
 				1C9214AF22D54D97006EC594 /* DetailsViewController.m in Sources */,
 				1C9214FE22D6A2E3006EC594 /* PostCollectionViewCell.m in Sources */,
+				1C92150422D6B4C8006EC594 /* EditViewController.m in Sources */,
 				1C9214FB22D677D9006EC594 /* InfiniteScrollActivityView.m in Sources */,
 				1C9214A322D415B0006EC594 /* TimelineViewController.m in Sources */,
 				1C9214A922D53B97006EC594 /* Post.m in Sources */,

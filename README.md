@@ -37,6 +37,7 @@ The following **additional** features are implemented:
 
 - [X] Post is a tab on the tab bar at the bottom.
 - [X] When user enters password upon login, the password is hidden in the text field.
+- [X] User can change their profile photo and the user bio on an edit profile page
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 

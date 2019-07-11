@@ -22,26 +22,36 @@
 
 @implementation ProfileViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    PFFileObject *image = [self.user objectForKey:@"profileImage"];
+    [image getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        if (!data) {
+            return NSLog(@"%@", error);
+        }
+        // Do something with the image
+        self.profileImage = [UIImage imageWithData:data];
+        self.profileImageView.image = self.profileImage;
+    }];
+    NSString *userBio = [self.user objectForKey:@"userBio"];
+    self.bioLabel.text = userBio;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     // Do any additional setup after loading the view.
+    self.editButton.hidden = YES;
     if(self.user == nil){
         self.user = [PFUser currentUser];
+        self.editButton.hidden = NO;
     }
     [self fetchPosts];
+    self.editButton.layer.borderWidth = 1.0f;
+    self.editButton.layer.borderColor = [[UIColor grayColor] CGColor];
+    self.editButton.layer.cornerRadius = 5.0f;
     self.profileImageView.layer.cornerRadius = 50.0f;
-    self.imagePickerVC = [UIImagePickerController new];
-    self.imagePickerVC.delegate = self;
-    self.imagePickerVC.allowsEditing = YES;
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        self.imagePickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
-    }
-    else {
-        NSLog(@"Camera 🚫 available so we will use photo library instead");
-        self.imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    }
+    
     PFFileObject *image = [self.user objectForKey:@"profileImage"];
     [image getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         if (!data) {
@@ -64,33 +74,6 @@
     layout.itemSize = CGSizeMake(itemWidth, itemHeight);
 }
 
-- (IBAction)profileImagePressed:(id)sender {
-    if (self.user == [PFUser currentUser]){
-        [self presentViewController:self.imagePickerVC animated:YES completion:nil];
-    }
-}
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
-    
-    // Get the image captured by the UIImagePickerController
-    //UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
-    UIImage *editedImage = info[UIImagePickerControllerEditedImage];
-    PFUser *user = [PFUser currentUser];
-    // Do something with the images (based on your use case)
-    
-    self.profileImage = [self resizeImage:editedImage withSize:CGSizeMake(400, 400)];
-    self.profileImageView.image = self.profileImage;
-    NSData *imageData = UIImageJPEGRepresentation(self.profileImage, 1.0);
-    PFFileObject *imageFile = [PFFileObject fileObjectWithName:@"img.png" data:imageData];
-    [imageFile saveInBackground];
-    [user setObject:imageFile forKey:@"profileImage"];
-    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (!error) {
-        }}];
-    
-    
-    // Dismiss UIImagePickerController to go back to your original view controller
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
 
 - (void)fetchPosts{
     // construct query
@@ -111,19 +94,7 @@
     }];
 }
 
-- (UIImage *)resizeImage:(UIImage *)image withSize:(CGSize)size {
-    UIImageView *resizeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
-    
-    resizeImageView.contentMode = UIViewContentModeScaleAspectFill;
-    resizeImageView.image = image;
-    
-    UIGraphicsBeginImageContext(size);
-    [resizeImageView.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return newImage;
-}
+
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     PostCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PostCollectionViewCell" forIndexPath:indexPath];
     Post *post = self.postArray[indexPath.row];
