@@ -26,6 +26,8 @@
 		1C9214FB22D677D9006EC594 /* InfiniteScrollActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9214FA22D677D9006EC594 /* InfiniteScrollActivityView.m */; };
 		1C9214FE22D6A2E3006EC594 /* PostCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9214FD22D6A2E3006EC594 /* PostCollectionViewCell.m */; };
 		1C92150422D6B4C8006EC594 /* EditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C92150322D6B4C8006EC594 /* EditViewController.m */; };
+		1C92150722D7DE07006EC594 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C92150622D7DE07006EC594 /* CommentViewController.m */; };
+		1C92150A22D7E21C006EC594 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C92150922D7E21C006EC594 /* CommentCell.m */; };
 		25FCF9C6AC2D8B4DBE89FE03 /* Pods_InstagramUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A799D411BD1EC099120E341 /* Pods_InstagramUITests.framework */; };
 		CC682C658F578DC121A5456D /* Pods_Instagram.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 225817611252D9D8005CD6EA /* Pods_Instagram.framework */; };
 		F6CA717D3603C43B72525C05 /* Pods_InstagramTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29259E13FD60EB3B79552962 /* Pods_InstagramTests.framework */; };
@@ -87,6 +89,10 @@
 		1C9214FD22D6A2E3006EC594 /* PostCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PostCollectionViewCell.m; sourceTree = "<group>"; };
 		1C92150222D6B4C8006EC594 /* EditViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditViewController.h; sourceTree = "<group>"; };
 		1C92150322D6B4C8006EC594 /* EditViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditViewController.m; sourceTree = "<group>"; };
+		1C92150522D7DE07006EC594 /* CommentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommentViewController.h; sourceTree = "<group>"; };
+		1C92150622D7DE07006EC594 /* CommentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
+		1C92150822D7E21C006EC594 /* CommentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommentCell.h; sourceTree = "<group>"; };
+		1C92150922D7E21C006EC594 /* CommentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommentCell.m; sourceTree = "<group>"; };
 		225817611252D9D8005CD6EA /* Pods_Instagram.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Instagram.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		29259E13FD60EB3B79552962 /* Pods_InstagramTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstagramTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		66C25F970E5F1492CD631839 /* Pods-Instagram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Instagram.release.xcconfig"; path = "Target Support Files/Pods-Instagram/Pods-Instagram.release.xcconfig"; sourceTree = "<group>"; };
@@ -186,6 +192,8 @@
 		1C92149922D407B7006EC594 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				1C92150522D7DE07006EC594 /* CommentViewController.h */,
+				1C92150622D7DE07006EC594 /* CommentViewController.m */,
 				1C92150222D6B4C8006EC594 /* EditViewController.h */,
 				1C92150322D6B4C8006EC594 /* EditViewController.m */,
 				1C9214F622D65DA4006EC594 /* ProfileViewController.h */,
@@ -222,6 +230,8 @@
 				1C9214FA22D677D9006EC594 /* InfiniteScrollActivityView.m */,
 				1C9214AA22D54603006EC594 /* PostCell.h */,
 				1C9214AB22D54603006EC594 /* PostCell.m */,
+				1C92150822D7E21C006EC594 /* CommentCell.h */,
+				1C92150922D7E21C006EC594 /* CommentCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -480,6 +490,7 @@
 			files = (
 				1C92149822D407AB006EC594 /* LoginViewController.m in Sources */,
 				1C92149C22D41202006EC594 /* SignUpViewController.m in Sources */,
+				1C92150722D7DE07006EC594 /* CommentViewController.m in Sources */,
 				1C92147422D3FA78006EC594 /* main.m in Sources */,
 				1C9214AC22D54603006EC594 /* PostCell.m in Sources */,
 				1C9214F822D65DA4006EC594 /* ProfileViewController.m in Sources */,
@@ -490,6 +501,7 @@
 				1C92150422D6B4C8006EC594 /* EditViewController.m in Sources */,
 				1C9214FB22D677D9006EC594 /* InfiniteScrollActivityView.m in Sources */,
 				1C9214A322D415B0006EC594 /* TimelineViewController.m in Sources */,
+				1C92150A22D7E21C006EC594 /* CommentCell.m in Sources */,
 				1C9214A922D53B97006EC594 /* Post.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

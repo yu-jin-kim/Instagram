@@ -7,16 +7,27 @@
 //
 
 #import "DetailsViewController.h"
+#import "CommentCell.h"
+#import "CommentViewController.h"
 
-@interface DetailsViewController ()
+@interface DetailsViewController ()<UITableViewDelegate, UITableViewDataSource>
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) NSArray *commentsArray;
 
 @end
 
 @implementation DetailsViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [self fetchComments];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self fetchComments];
     self.profilePicture.layer.cornerRadius = 17.5f;
     PFFileObject *image = [self.post.author objectForKey:@"profileImage"];
     [image getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
@@ -98,18 +109,33 @@
         [self.likeButton setImage:[UIImage imageNamed:@"hearticon2.png"] forState:UIControlStateNormal];
     }
 }
-- (IBAction)commentButtonPressed:(id)sender {
+
+- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    //ask datasource for cellsforrowat
+    CommentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
+    NSString *comment = self.commentsArray[indexPath.row];
+    cell.commentLabel.text = comment;
+    return cell;
 }
 
+- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    //ask datasource for numberofrows
+    //returns number of items returned from API
+    return self.commentsArray.count;
+}
 
-/*
-#pragma mark - Navigation
+- (void)fetchComments{
+    self.commentsArray = [self.post objectForKey:@"comments"];
+    [self.tableView reloadData];
+}
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    CommentViewController *commentViewController = [segue destinationViewController];
+    commentViewController.post = self.post;
 }
-*/
+
 
 @end

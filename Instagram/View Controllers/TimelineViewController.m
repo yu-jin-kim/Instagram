@@ -16,6 +16,7 @@
 #import "PostCell.h"
 #import "AppDelegate.h"
 #import "InfiniteScrollActivityView.h"
+#import "CommentViewController.h"
 
 
 @interface TimelineViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
@@ -31,7 +32,9 @@
 bool isMoreDataLoading = false;
 InfiniteScrollActivityView* loadingMoreView;
 
-
+- (void)viewDidAppear:(BOOL)animated{
+    [self fetchPosts];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -210,7 +213,13 @@ InfiniteScrollActivityView* loadingMoreView;
     if ([[segue identifier] isEqualToString:@"profileSegue"]){
         ProfileViewController *profileViewController = [segue destinationViewController];
         profileViewController.user = sender;
-    } else{
+    }
+    else if ([[segue identifier] isEqualToString:@"commentSegue"]){
+        PostCell *tappedCell = sender;
+        CommentViewController *commentViewController = [segue destinationViewController];
+        commentViewController.post = tappedCell.post;
+    }
+    else{
         PostCell *tappedCell = sender;
         DetailsViewController *detailsViewController = [segue destinationViewController];
         detailsViewController.post = tappedCell.post;
