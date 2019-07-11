@@ -29,7 +29,7 @@ The following **optional** features are implemented:
 - [X] Allow the logged in user to add a profile photo
 - [X] Display the profile photo with each post
 - [X] Tapping on a post's profile photo goes to that user's profile page
-- [ ] User can comment on a post and see all comments for each post in the post details screen.
+- [X] User can comment on a post and see all comments for each post in the post details screen.
 - [X] User can like a post and see number of likes for each post in the post details screen.
 - [ ] Implement a custom camera view.
 
@@ -56,7 +56,9 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 List an 3rd party libraries, icons, graphics, or other assets you used in your app.
 
-- [AFNetworking](https://github.com/AFNetworking/AFNetworking) - networking task library
+- [Parse](https://cocoapods.org/pods/Parse) - for backend management
+- [MBProgressHUD](https://cocoapods.org/pods/MBProgressHUD) - progress HUD for loading 
+- [DateTools](https://cocoapods.org/pods/DateTools) - timestamping tool
 
 
 ## Notes
@@ -65,7 +67,7 @@ Describe any challenges encountered while building the app.
 
 ## License
 
-Copyright [yyyy] [name of copyright owner]
+Copyright [2019] [Yu Jin Kim]
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

@@ -18,8 +18,18 @@
 
 @implementation DetailsViewController
 
-- (void)viewWillAppear:(BOOL)animated{
-    [self fetchComments];
+- (void)viewDidAppear:(BOOL)animated{
+    PFUser *currentUser = [PFUser currentUser];
+    NSArray *likedUsers = [[NSArray alloc] init];
+    likedUsers = [self.post objectForKey:@"likes"];
+    if(![likedUsers containsObject:currentUser.username]){
+        self.likeButton.selected = NO;
+        [self.likeButton setImage:[UIImage imageNamed:@"hearticon2.png"] forState:UIControlStateNormal];
+    }
+    else{
+        self.likeButton.selected = YES;
+        [self.likeButton setImage:[UIImage imageNamed:@"redhearticon.png"] forState:UIControlStateSelected];
+    }
 }
 
 - (void)viewDidLoad {
@@ -82,29 +92,43 @@
         createdAtString = [formatter stringFromDate:createdAt];
     }
     self.timestampLabel.text = createdAtString;
+    PFUser *currentUser = [PFUser currentUser];
+    NSArray *likedUsers = [[NSArray alloc] init];
+    likedUsers = [self.post objectForKey:@"likes"];
+    if(![likedUsers containsObject:currentUser.username]){
+        self.likeButton.selected = NO;
+        [self.likeButton setImage:[UIImage imageNamed:@"hearticon2.png"] forState:UIControlStateNormal];
+    }
+    else{
+        self.likeButton.selected = YES;
+        [self.likeButton setImage:[UIImage imageNamed:@"redhearticon.png"] forState:UIControlStateSelected];
+    }
 }
 - (IBAction)likeButtonPressed:(id)sender {
-    if(!self.likeButton.isSelected){
-        int value = [self.post.likeCount intValue];
-        self.post.likeCount = [NSNumber numberWithInt:value + 1];
-        NSString *likeCountString = [NSString stringWithFormat:@"%@",self.post.likeCount];
-        self.likeCount.text = likeCountString;
-        [self.post setObject:self.post.likeCount forKey:@"likeCount"];
+    PFUser *currentUser = [PFUser currentUser];
+    NSArray *likedUsers = [[NSArray alloc] init];
+    likedUsers = [self.post objectForKey:@"likes"];
+    if(![likedUsers containsObject:currentUser.username]){
+        [self.post addObject:currentUser.username forKey:@"likes"];
+        likedUsers = [self.post objectForKey:@"likes"];
+        [self.post setObject:@(likedUsers.count) forKey:@"likeCount"];
         [self.post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (!error) {
             }}];
+        NSString *likeCountString = [NSString stringWithFormat:@"%@",@(likedUsers.count)];
+        self.likeCount.text = likeCountString;
         self.likeButton.selected = YES;
         [self.likeButton setImage:[UIImage imageNamed:@"redhearticon.png"] forState:UIControlStateSelected];
     }
     else{
-        int value = [self.post.likeCount intValue];
-        self.post.likeCount = [NSNumber numberWithInt:value - 1];
-        NSString *likeCountString = [NSString stringWithFormat:@"%@",self.post.likeCount];
-        self.likeCount.text = likeCountString;
-        [self.post setObject:self.post.likeCount forKey:@"likeCount"];
+        [self.post removeObject:currentUser.username forKey:@"likes"];
+        likedUsers = [self.post objectForKey:@"likes"];
+        [self.post setObject:@(likedUsers.count) forKey:@"likeCount"];
         [self.post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (!error) {
             }}];
+        NSString *likeCountString = [NSString stringWithFormat:@"%@",@(likedUsers.count)];
+        self.likeCount.text = likeCountString;
         self.likeButton.selected = NO;
         [self.likeButton setImage:[UIImage imageNamed:@"hearticon2.png"] forState:UIControlStateNormal];
     }
