@@ -22,13 +22,14 @@
     PFUser *currentUser = [PFUser currentUser];
     NSArray *likedUsers = [[NSArray alloc] init];
     likedUsers = [self.post objectForKey:@"likes"];
+    [self.likeButton setImage:[UIImage imageNamed:@"hearticon2.png"] forState:UIControlStateNormal];
+    [self.likeButton setImage:[UIImage imageNamed:@"redhearticon.png"] forState:UIControlStateSelected];
     if(![likedUsers containsObject:currentUser.username]){
         self.likeButton.selected = NO;
-        [self.likeButton setImage:[UIImage imageNamed:@"hearticon2.png"] forState:UIControlStateNormal];
     }
     else{
         self.likeButton.selected = YES;
-        [self.likeButton setImage:[UIImage imageNamed:@"redhearticon.png"] forState:UIControlStateSelected];
+        
     }
 }
 
@@ -95,13 +96,14 @@
     PFUser *currentUser = [PFUser currentUser];
     NSArray *likedUsers = [[NSArray alloc] init];
     likedUsers = [self.post objectForKey:@"likes"];
+    [self.likeButton setImage:[UIImage imageNamed:@"hearticon2.png"] forState:UIControlStateNormal];
+    [self.likeButton setImage:[UIImage imageNamed:@"redhearticon.png"] forState:UIControlStateSelected];
     if(![likedUsers containsObject:currentUser.username]){
         self.likeButton.selected = NO;
-        [self.likeButton setImage:[UIImage imageNamed:@"hearticon2.png"] forState:UIControlStateNormal];
+        
     }
     else{
         self.likeButton.selected = YES;
-        [self.likeButton setImage:[UIImage imageNamed:@"redhearticon.png"] forState:UIControlStateSelected];
     }
 }
 - (IBAction)likeButtonPressed:(id)sender {

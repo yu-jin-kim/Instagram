@@ -37,9 +37,7 @@
         [self.post addObject:currentUser.username forKey:@"likes"];
         likedUsers = [self.post objectForKey:@"likes"];
         [self.post setObject:@(likedUsers.count) forKey:@"likeCount"];
-        [self.post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            if (!error) {
-            }}];
+        [self.post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {}];
         NSString *likeCountString = [NSString stringWithFormat:@"%@",@(likedUsers.count)];
         self.likeCountLabel.text = likeCountString;
         self.likeButton.selected = YES;
@@ -49,9 +47,7 @@
         [self.post removeObject:currentUser.username forKey:@"likes"];
         likedUsers = [self.post objectForKey:@"likes"];
         [self.post setObject:@(likedUsers.count) forKey:@"likeCount"];
-        [self.post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            if (!error) {
-            }}];
+        [self.post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){}];
         NSString *likeCountString = [NSString stringWithFormat:@"%@",@(likedUsers.count)];
         self.likeCountLabel.text = likeCountString;
         self.likeButton.selected = NO;

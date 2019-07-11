@@ -25,6 +25,7 @@
 @implementation ProfileViewController
 
 - (void)viewDidAppear:(BOOL)animated{
+    [self fetchPosts];
     PFFileObject *image = [self.user objectForKey:@"profileImage"];
     [image getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         if (!data) {
@@ -36,7 +37,7 @@
     }];
     NSString *userBio = [self.user objectForKey:@"userBio"];
     self.bioLabel.text = userBio;
-    [self fetchPosts];
+    self.postCountLabel.text = [NSString stringWithFormat:@"%lu", self.postArray.count];
 }
 
 - (void)viewDidLoad {
@@ -67,6 +68,7 @@
     self.username.text = self.user.username;
     NSString *userBio = [self.user objectForKey:@"userBio"];
     self.bioLabel.text = userBio;
+    self.postCountLabel.text = [NSString stringWithFormat:@"%lu", self.postArray.count];
 }
 
 
