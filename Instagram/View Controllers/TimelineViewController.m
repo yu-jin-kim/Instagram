@@ -42,6 +42,7 @@ InfiniteScrollActivityView* loadingMoreView;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = 542.0;
+    
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(fetchPosts) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:self.refreshControl atIndex:0];
@@ -50,6 +51,8 @@ InfiniteScrollActivityView* loadingMoreView;
     loadingMoreView = [[InfiniteScrollActivityView alloc] initWithFrame:frame];
     loadingMoreView.hidden = true;
     [self.tableView addSubview:loadingMoreView];
+    
+    
     
     UIEdgeInsets insets = self.tableView.contentInset;
     insets.bottom += InfiniteScrollActivityView.defaultHeight;

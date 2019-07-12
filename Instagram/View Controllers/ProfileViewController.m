@@ -12,7 +12,7 @@
 #import "Post.h"
 #import <Parse/Parse.h>
 
-@interface ProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface ProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) NSMutableArray *postArray;
 @property (strong, nonatomic) UIImagePickerController *imagePickerVC;
@@ -56,6 +56,14 @@
     self.editButton.layer.cornerRadius = 5.0f;
     self.profileImageView.layer.cornerRadius = 50.0f;
     
+    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
+    layout.minimumLineSpacing = 0;
+    layout.minimumInteritemSpacing = 0;
+    CGFloat imagesPerLine = 3;
+    CGFloat itemWidth = (self.collectionView.frame.size.width - layout.minimumInteritemSpacing * (imagesPerLine - 1)) / imagesPerLine;
+    CGFloat itemHeight = itemWidth;
+    layout.itemSize = CGSizeMake(itemWidth, itemHeight);
+    
     PFFileObject *image = [self.user objectForKey:@"profileImage"];
     [image getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         if (!data) {
@@ -69,6 +77,18 @@
     NSString *userBio = [self.user objectForKey:@"userBio"];
     self.bioLabel.text = userBio;
     self.postCountLabel.text = [NSString stringWithFormat:@"%lu", self.postArray.count];
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    float cellWidth = screenWidth / 3.0; //Replace the divisor with the column count requirement. Make sure to have it in float.
+    CGSize size = CGSizeMake(cellWidth, cellWidth);
+    
+    return size;
 }
 
 

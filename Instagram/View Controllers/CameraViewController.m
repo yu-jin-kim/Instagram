@@ -29,14 +29,8 @@
     self.imagePickerVC = [UIImagePickerController new];
     self.imagePickerVC.delegate = self;
     self.imagePickerVC.allowsEditing = YES;
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        self.imagePickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
-    }
-    else {
-        NSLog(@"Camera 🚫 available so we will use photo library instead");
-        self.imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    }
 }
+
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     
     // Get the image captured by the UIImagePickerController
@@ -62,9 +56,27 @@
     
     return newImage;
 }
-- (IBAction)photoButtonPressed:(id)sender {
+
+- (IBAction)cameraPressed:(id)sender {
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        self.imagePickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
+    }
+    else {
+        NSLog(@"Camera 🚫 available so we will use photo library instead");
+        self.imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }
     [self presentViewController:self.imagePickerVC animated:YES completion:nil];
 }
+
+- (IBAction)galleryPressed:(id)sender {
+    self.imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    
+    [self presentViewController:self.imagePickerVC animated:YES completion:nil];
+}
+- (IBAction)cancelPressed:(id)sender {
+    [self.tabBarController setSelectedIndex:0];
+}
+
 - (IBAction)postButtonPressed:(id)sender {
     if(self.photo){
         [Post postUserImage:self.photo withCaption:self.captionView.text withCompletion:nil];
