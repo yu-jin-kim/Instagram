@@ -19,6 +19,7 @@
 @implementation DetailsViewController
 
 - (void)viewDidAppear:(BOOL)animated{
+    [self fetchComments];
     PFUser *currentUser = [PFUser currentUser];
     NSArray *likedUsers = [[NSArray alloc] init];
     likedUsers = [self.post objectForKey:@"likes"];
