@@ -17,14 +17,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    // rounded border for button
     self.signupButton.layer.cornerRadius = 5.0f;
 }
 
 - (IBAction)signupPressed:(id)sender {
+    //when signup button pressed register user
     [self registerUser];
 }
+
 - (IBAction)loginPressed:(id)sender {
+    //when login pressed, dismiss the signup view controller
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -40,6 +43,7 @@
     // call sign up function on the object
     [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * error) {
         if (error != nil) {
+            //error when register not successful
             NSLog(@"Error: %@", error.localizedDescription);
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
                                                                            message:@"Could not register account."
@@ -59,14 +63,6 @@
         }
     }];
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

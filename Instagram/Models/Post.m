@@ -22,6 +22,7 @@
     return @"Post";
 }
 
+// our function for taking the image and caption the user wants to post and adding it to our Parse server
 + (void) postUserImage: ( UIImage * _Nullable )image withCaption: ( NSString * _Nullable )caption withCompletion: (PFBooleanResultBlock  _Nullable)completion {
     
     Post *newPost = [Post new];

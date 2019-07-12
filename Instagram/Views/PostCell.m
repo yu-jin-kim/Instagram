@@ -12,14 +12,14 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+    // gesture recognizer on profile picture for navigating to user profile view controller
     UITapGestureRecognizer *profileTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapUserProfile:)];
     [self.profilePictureView addGestureRecognizer:profileTapGestureRecognizer];
     [self.profilePictureView setUserInteractionEnabled:YES];
 }
 
+//calling delegate method to pass user as sender when profile picture is tapped
 - (void) didTapUserProfile:(UITapGestureRecognizer *)sender{
-    // TODO: Call method on delegate
     [self.delegate postCell:self didTap:self.post.author];
     
 }
@@ -30,9 +30,11 @@
 
 
 - (IBAction)likeButtonPressed:(id)sender {
+    // keeping track of current user activity
     PFUser *currentUser = [PFUser currentUser];
     NSArray *likedUsers = [[NSArray alloc] init];
     likedUsers = [self.post objectForKey:@"likes"];
+    //if our post's array of liked users does not contain our current user we add it to the array, like the post, and set our like button to be red in its selected state
     if(![likedUsers containsObject:currentUser.username]){
         [self.post addObject:currentUser.username forKey:@"likes"];
         likedUsers = [self.post objectForKey:@"likes"];
@@ -43,6 +45,7 @@
         self.likeButton.selected = YES;
         [self.likeButton setImage:[UIImage imageNamed:@"redhearticon.png"] forState:UIControlStateSelected];
     }
+    //otherwise, we remove the current user from the array, making the button unselected and unliking the post
     else{
         [self.post removeObject:currentUser.username forKey:@"likes"];
         likedUsers = [self.post objectForKey:@"likes"];
@@ -56,8 +59,5 @@
     
 }
 
-- (IBAction)commentButtonPressed:(id)sender {
-    
-}
 
 @end

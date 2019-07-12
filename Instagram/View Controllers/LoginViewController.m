@@ -17,21 +17,23 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    // rounded buttons and hidden text in password text field
     self.loginButton.layer.cornerRadius = 5.0f;
     self.passwordField.secureTextEntry = YES;
 }
 
 - (IBAction)signupPressed:(id)sender {
+    //when signup pressed, segue into signupviewcontroller
     [self performSegueWithIdentifier:@"signupSegue" sender:nil];
 }
 
 - (IBAction)loginPressed:(id)sender {
     NSString *username = self.usernameField.text;
     NSString *password = self.passwordField.text;
-    
+    //check if username and password matches a user in our server
     [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser * user, NSError *  error) {
         if (error != nil) {
+            //error message when login failed
             NSLog(@"User log in failed: %@", error.localizedDescription);
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
                                                                            message:@"Incorrect username / password."
@@ -46,6 +48,7 @@
             [self presentViewController:alert animated:YES completion:^{
             }];
         } else {
+            //when login successful, segue into home page
             NSLog(@"User logged in successfully");
             [self performSegueWithIdentifier:@"loginSegue" sender:nil];
             // display view controller that needs to shown after successful login
@@ -53,17 +56,5 @@
     }];
 }
 
-
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

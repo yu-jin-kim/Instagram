@@ -20,12 +20,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    // set our delegate
     self.captionView.delegate = self;
+    //add rounded borders to our text view
     self.captionView.layer.borderWidth = 1.0f;
     self.captionView.layer.borderColor = [[UIColor grayColor] CGColor];
     self.captionView.clipsToBounds = YES;
     self.captionView.layer.cornerRadius = 5.0f;
+    //set our image picker
     self.imagePickerVC = [UIImagePickerController new];
     self.imagePickerVC.delegate = self;
     self.imagePickerVC.allowsEditing = YES;
@@ -34,16 +36,16 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     
     // Get the image captured by the UIImagePickerController
-    //UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
     UIImage *editedImage = info[UIImagePickerControllerEditedImage];
     
-    // Do something with the images (based on your use case)
+    // resize and set our imageview to the selected photo
     self.photo = [self resizeImage:editedImage withSize:CGSizeMake(400, 400)];
     self.photoView.image = self.photo;
     // Dismiss UIImagePickerController to go back to your original view controller
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (UIImage *)resizeImage:(UIImage *)image withSize:(CGSize)size {
+    //resize image function
     UIImageView *resizeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
     
     resizeImageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -58,6 +60,7 @@
 }
 
 - (IBAction)cameraPressed:(id)sender {
+    //if the camera button is pressed we check that the camera is available; if it is, use camera, if not use photo gallery
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         self.imagePickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
     }
@@ -69,22 +72,26 @@
 }
 
 - (IBAction)galleryPressed:(id)sender {
+    //if gallery button is chosen, we use photo gallery as our source
     self.imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     
     [self presentViewController:self.imagePickerVC animated:YES completion:nil];
 }
 - (IBAction)cancelPressed:(id)sender {
+    //dismiss view controller and go back to timeline without doing anything
     [self.tabBarController setSelectedIndex:0];
 }
 
 - (IBAction)postButtonPressed:(id)sender {
     if(self.photo){
+        //if a photo was selected, post it to our server with the caption
         [Post postUserImage:self.photo withCaption:self.captionView.text withCompletion:nil];
         self.photoView.image = nil;
         [self.captionView setText:@""];
         [self.tabBarController setSelectedIndex:0];
     }
     else{
+        //error message for when a photo was not selected
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
                                                                        message:@"Please select a photo."
                                                                 preferredStyle:(UIAlertControllerStyleAlert)];
@@ -100,16 +107,5 @@
     }
     
 }
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

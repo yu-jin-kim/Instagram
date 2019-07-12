@@ -16,13 +16,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    // styling our textview to have rounded borders
     self.commentTextView.layer.borderWidth = 1.0f;
     self.commentTextView.layer.borderColor = [[UIColor grayColor] CGColor];
     self.commentTextView.clipsToBounds = YES;
     self.commentTextView.layer.cornerRadius = 5.0f;
 }
+
 - (IBAction)commentButtonPressed:(id)sender {
+    // when comment button is pressed, check if the comment is not empty, append it to our string containing the username, and post it to our server
     if(![self.commentTextView.text isEqualToString:@""]){
         NSString *username = [PFUser currentUser].username;
         NSString *space = @": ";
@@ -37,6 +40,7 @@
         [self dismissViewControllerAnimated:YES completion:nil];
     }
     else{
+        //error message for when comment is empty
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
                                                                        message:@"Please enter a comment."
                                                                 preferredStyle:(UIAlertControllerStyleAlert)];
@@ -52,18 +56,12 @@
     }
     
 }
+
+//when cancel is pressed, dismiss our view controller without doing anything
 - (IBAction)cancelPressed:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

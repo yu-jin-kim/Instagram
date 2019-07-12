@@ -24,38 +24,30 @@
 
 @implementation ProfileViewController
 
-- (void)viewDidAppear:(BOOL)animated{
-    [self fetchPosts];
-    PFFileObject *image = [self.user objectForKey:@"profileImage"];
-    [image getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-        if (!data) {
-            return NSLog(@"%@", error);
-        }
-        // Do something with the image
-        self.profileImage = [UIImage imageWithData:data];
-        self.profileImageView.image = self.profileImage;
-    }];
-    NSString *userBio = [self.user objectForKey:@"userBio"];
-    self.bioLabel.text = userBio;
-    self.postCountLabel.text = [NSString stringWithFormat:@"%lu", self.postArray.count];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //setting our datasource and delgate
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
-    // Do any additional setup after loading the view.
+    
+    //hide our edit profile button unless self.user is currentuser so that no one else can edit others' profiles
     self.editButton.hidden = YES;
     if(self.user == nil){
         self.user = [PFUser currentUser];
         self.editButton.hidden = NO;
     }
+    //fetch our posts from the server and set it to our array of posts
     [self fetchPosts];
+    
+    //styling our edit button to have rounded borders
     self.editButton.layer.borderWidth = 1.0f;
     self.editButton.layer.borderColor = [[UIColor grayColor] CGColor];
     self.editButton.layer.cornerRadius = 5.0f;
+    
+    //circular profile image
     self.profileImageView.layer.cornerRadius = 50.0f;
     
+    //making sure our collection view has three picture per row
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
     layout.minimumLineSpacing = 0;
     layout.minimumInteritemSpacing = 0;
@@ -64,6 +56,7 @@
     CGFloat itemHeight = itemWidth;
     layout.itemSize = CGSizeMake(itemWidth, itemHeight);
     
+    //fetching the user's profile image from server and setting it to our imageview
     PFFileObject *image = [self.user objectForKey:@"profileImage"];
     [image getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         if (!data) {
@@ -73,24 +66,30 @@
         self.profileImage = [UIImage imageWithData:data];
         self.profileImageView.image = self.profileImage;
     }];
+    
+    //set the rest of our user information to corresponding labels
     self.username.text = self.user.username;
     NSString *userBio = [self.user objectForKey:@"userBio"];
     self.bioLabel.text = userBio;
     self.postCountLabel.text = [NSString stringWithFormat:@"%lu", self.postArray.count];
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    CGFloat screenWidth = screenRect.size.width;
-    float cellWidth = screenWidth / 3.0; //Replace the divisor with the column count requirement. Make sure to have it in float.
-    CGSize size = CGSizeMake(cellWidth, cellWidth);
-    
-    return size;
+- (void)viewDidAppear:(BOOL)animated{
+    //update these properties again in case the user edited profile and wants to see updated changes once editviewcontroller is dismissed
+    [self fetchPosts];
+    PFFileObject *image = [self.user objectForKey:@"profileImage"];
+    [image getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        if (!data) {
+            return NSLog(@"%@", error);
+        }
+        // Do something with the image
+        self.profileImage = [UIImage imageWithData:data];
+        self.profileImageView.image = self.profileImage;
+    }];
+    NSString *userBio = [self.user objectForKey:@"userBio"];
+    self.bioLabel.text = userBio;
+    self.postCountLabel.text = [NSString stringWithFormat:@"%lu", self.postArray.count];
 }
-
 
 - (void)fetchPosts{
     // construct query
@@ -112,6 +111,7 @@
 }
 
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    //populate our collection view cells with the data we fetched
     PostCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PostCollectionViewCell" forIndexPath:indexPath];
     Post *post = self.postArray[indexPath.row];
     cell.post = post;
@@ -130,14 +130,5 @@
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.postArray.count;
 }
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
