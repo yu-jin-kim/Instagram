@@ -552,6 +552,11 @@
                                 </constraints>
                                 <items>
                                     <navigationItem title="Comment" id="qba-PY-HRk">
+                                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="l4n-Dq-OpZ">
+                                            <connections>
+                                                <action selector="cancelPressed:" destination="DRo-UC-XSn" id="cGB-Du-9am"/>
+                                            </connections>
+                                        </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" title="Item" image="edit-icon" id="7je-F7-I2H">
                                             <connections>
                                                 <action selector="commentButtonPressed:" destination="DRo-UC-XSn" id="jt2-0B-xdS"/>
@@ -987,6 +992,6 @@
         <image name="profile_tab" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="U8f-pb-qQi"/>
+        <segue reference="fKg-j4-Gnk"/>
     </inferredMetricsTieBreakers>
 </document>
